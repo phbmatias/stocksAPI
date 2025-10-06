@@ -2,6 +2,7 @@ package com.project.stocksAPI.services;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -23,7 +24,8 @@ public class SearchHistoryService {
 	
 	public List<SearchHistory> SearchAndStoreCurrency(){
 		String APIurl = "https://economia.awesomeapi.com.br/json/last/USD-BRL,EUR-BRL";
-		Map<String, Map<String, Object>> response = restTemplate.getForObject(APIurl, Map.class);
+		Map<String, Map<String, Object>> response = restTemplate.
+				getForObject(APIurl, Map.class);
 		
 		List<SearchHistory> searchHistories = new ArrayList<>();
 		
@@ -31,9 +33,14 @@ public class SearchHistoryService {
 		Map<String, Object> usdData = response.get("USDBRL");
 		SearchHistory usd = new SearchHistory();
 		
-		usd.setDate(LocalDateTime.now());
+		// Formatador de data dia/mês/ano horas:minutos:segundos 
+		DateTimeFormatter dateFormatter = DateTimeFormatter.
+				ofPattern("dd/MM/yyyy HH:mm:ss");
+		usd.setDate(LocalDateTime.now().
+				format(dateFormatter));
 		usd.setCurrency("USD");
-		usd.setValueInReais(new BigDecimal(usdData.get("bid").toString()));
+		usd.setValueInReais(new BigDecimal(usdData.
+				get("bid").toString()));
 		
 		repository.save(usd);
 		searchHistories.add(usd);

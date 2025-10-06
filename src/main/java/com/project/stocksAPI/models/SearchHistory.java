@@ -1,7 +1,6 @@
 package com.project.stocksAPI.models;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -14,7 +13,7 @@ public class SearchHistory {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
-	private LocalDateTime date;
+	private String date;
 	private String currency;
 	private BigDecimal valueInReais;
 	
@@ -26,10 +25,10 @@ public class SearchHistory {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public LocalDateTime getDate() {
+	public String getDate() {
 		return date;
 	}
-	public void setDate(LocalDateTime date) {
+	public void setDate(String date) {
 		this.date = date;
 	}
 	public String getCurrency() {

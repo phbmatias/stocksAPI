@@ -19,7 +19,8 @@ public class SearchHistoryController {
 	
 	@GetMapping
 	public List<SearchHistory> getCurrency() {
-		return service.SearchAndStoreCurrency();
+		return service.
+				SearchAndStoreCurrency();
 	}
 	
 }
