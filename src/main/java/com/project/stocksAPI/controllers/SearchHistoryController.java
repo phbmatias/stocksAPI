@@ -17,10 +17,19 @@ public class SearchHistoryController {
 	@Autowired
 	private SearchHistoryService service;
 	
-	@GetMapping
-	public List<SearchHistory> getCurrency() {
+	@GetMapping("/usd")
+	public List<SearchHistory> getCurrencyUsd() {
 		return service.
-				SearchAndStoreCurrency();
+				SearchAndStoreCurrency("USD");
 	}
-	
+	@GetMapping("/eur")
+	public List<SearchHistory> getCurrencyEur() {
+		return service.
+				SearchAndStoreCurrency("EUR");
+	}
+	@GetMapping("/btc")
+	public List<SearchHistory> getCurrencyBtc() {
+		return service.
+				SearchAndStoreCurrency("BTC");
+	}
 }

@@ -22,28 +22,45 @@ public class SearchHistoryService {
 	
 	private RestTemplate restTemplate = new RestTemplate();
 	
-	public List<SearchHistory> SearchAndStoreCurrency(){
-		String APIurl = "https://economia.awesomeapi.com.br/json/last/USD-BRL,EUR-BRL";
+	public List<SearchHistory> SearchAndStoreCurrency(String currencyType){
+		String APIcurrencyType = currencyType;
+		
+		if(APIcurrencyType.equalsIgnoreCase("USD")) {
+			APIcurrencyType = "USD-BRL";
+		}
+		else if(APIcurrencyType.equalsIgnoreCase("EUR")) {
+			APIcurrencyType = "EUR-BRL";
+		}
+		else if(APIcurrencyType.equalsIgnoreCase("BTC")) {
+			APIcurrencyType = "BTC-BRL";
+		}
+		else {
+			throw new IllegalArgumentException("Moeda não suportada");
+		}
+		
+		String APIurl = "https://economia.awesomeapi.com.br/json/last/" + APIcurrencyType;
 		Map<String, Map<String, Object>> response = restTemplate.
 				getForObject(APIurl, Map.class);
 		
 		List<SearchHistory> searchHistories = new ArrayList<>();
 		
-		// Dolar
-		Map<String, Object> usdData = response.get("USDBRL");
-		SearchHistory usd = new SearchHistory();
-		
 		// Formatador de data dia/mês/ano horas:minutos:segundos 
 		DateTimeFormatter dateFormatter = DateTimeFormatter.
 				ofPattern("dd/MM/yyyy HH:mm:ss");
-		usd.setDate(LocalDateTime.now().
+		
+		
+		// Dolar
+		Map<String, Object> Data = response.get(APIcurrencyType.replace("-", ""));
+		SearchHistory currency = new SearchHistory();
+		
+		currency.setDate(LocalDateTime.now().
 				format(dateFormatter));
-		usd.setCurrency("USD");
-		usd.setValueInReais(new BigDecimal(usdData.
+		currency.setCurrency(currencyType);
+		currency.setValueInReais(new BigDecimal(Data.
 				get("bid").toString()));
 		
-		repository.save(usd);
-		searchHistories.add(usd);
+		repository.save(currency);
+		searchHistories.add(currency);
 		
 		return searchHistories;
 	}
