@@ -32,4 +32,8 @@ public class SearchHistoryController {
 		return service.
 				SearchAndStoreCurrency("BTC");
 	}
+	@GetMapping("/all")
+	public List<SearchHistory> getAllHistory() {
+		return service.getAllHistory();
+	}
 }

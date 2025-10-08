@@ -48,8 +48,7 @@ public class SearchHistoryService {
 		DateTimeFormatter dateFormatter = DateTimeFormatter.
 				ofPattern("dd/MM/yyyy HH:mm:ss");
 		
-		
-		// Dolar
+		// Moeda
 		Map<String, Object> Data = response.get(APIcurrencyType.replace("-", ""));
 		SearchHistory currency = new SearchHistory();
 		
@@ -63,5 +62,8 @@ public class SearchHistoryService {
 		searchHistories.add(currency);
 		
 		return searchHistories;
+	}
+	public List<SearchHistory> getAllHistory(){
+		return repository.findAll();
 	}
 }
