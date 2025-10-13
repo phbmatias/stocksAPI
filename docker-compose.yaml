@@ -8,10 +8,14 @@ services:
       POSTGRES_DB: mydb
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: root
+      TZ: America/Bahia
     ports:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+      
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres -d mydb"]
       interval: 10s
@@ -31,12 +35,11 @@ services:
       db:
         condition: service_healthy
     environment:
-      # Configurações para o Spring Boot se conectar ao banco de dados
-      # [IMPORTANTE] Usamos o nome do serviço 'db' como hostname, e não 'localhost'
       SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/mydb
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: root
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      TZ: America/Bahia
     restart: unless-stopped
 
   # Frontend
@@ -57,4 +60,4 @@ services:
     restart: unless-stopped
 
 volumes:
-  postgres_data: 
+  postgres_data:
