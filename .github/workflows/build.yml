@@ -21,3 +21,12 @@ jobs:
     - name: Build with Maven
       working-directory: ./backend
       run: mvn package -DskipTests
+
+    - name: Use Node.js 22
+      uses: actions/setup-node@v4
+      with:
+        node-version: 22
+        cache: 'npm'
+        working-directory: ./frontend
+    - run: npm ci
+    - run: npm run build
