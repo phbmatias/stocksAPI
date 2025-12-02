@@ -35,7 +35,7 @@ public class SearchHistoryService {
 			APIcurrencyType = "BTC-BRL";
 		}
 		
-		String APIurl = "https://economia.awesomeapi.com.br/json/last/" + APIcurrencyType;
+		String APIurl = "https://economia.awesomeapi.com.br/json/last/" + APIcurrencyType ;
 		@SuppressWarnings("unchecked")
 		Map<String, Map<String, Object>> response = restTemplate.
 				getForObject(APIurl, Map.class);
