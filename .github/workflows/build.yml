@@ -27,6 +27,6 @@ jobs:
       with:
         node-version: 22
         cache: 'npm'
-        working-directory: ./frontend
-    - run: npm ci
-    - run: npm run build
+    - name: build frontend
+      working-directory: ./frontend
+      run: npm ci && npm run build
