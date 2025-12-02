@@ -43,6 +43,7 @@ public class SearchHistoryService {
 		List<SearchHistory> searchHistories = new ArrayList<>();
 		
 		// Formatador de data = dia/mês/ano horas:minutos:segundos 
+		
 		DateTimeFormatter dateFormatter = DateTimeFormatter.
 				ofPattern("dd/MM/yyyy HH:mm:ss");
 		
